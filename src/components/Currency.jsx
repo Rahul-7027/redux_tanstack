@@ -10,7 +10,6 @@ const Currency = () => {
         fromCurrency: "USD",
         toCurrency: "INR",
         error: null,
-        convert_result: null
     })
 
     const handleChange = (event) => {
@@ -19,16 +18,14 @@ const Currency = () => {
     }
 
 
-    const { getData: convert_result, refetch } = useQuery({
+    const { data: convertAmount, refetch } = useQuery({
+        // always use the data perimeter we cannot use the another variables
         queryKey: ["currency", data.amount, data.fromCurrency, data.toCurrency],
         queryFn: () => currencyConverter(data.amount, data.fromCurrency, data.toCurrency),
-        enabled:false,  
-        onSuccess: (data) => {
-            // Set the fetched data in state
-            console.log("Conversion result:", data); // Log the API response
-            setConvertedData(data.convert_result);
-        },
-    })
+        enabled: false,
+    });
+
+    console.log(convertAmount)
 
     const handleConvertCurrency = () => {
         refetch()
@@ -94,10 +91,10 @@ const Currency = () => {
                     </button>
 
                     <hr />
-                    {convert_result && (
+                    {convertAmount && (
                         <div>
                             <h2>
-                                {data.amount} {data.fromCurrency} = {convert_result.toFixed(2)}
+                                {data.amount} {data.fromCurrency} = {convertAmount.toFixed(2)}
                                 {data.toCurrency}
                             </h2>
                         </div>

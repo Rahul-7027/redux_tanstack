@@ -6,7 +6,7 @@ const api = axios.create({
 });
 
 export const currencyConverter =async (amount, fromCurrency, toCurrency) => {
- const data=await api.get(`/pair/${fromCurrency}/${toCurrency}/${amount}`)
-//  console.log(22222222,data.data.conversion_result)
- return data.data.conversion_result
+ const resData=await api.get(`/pair/${fromCurrency}/${toCurrency}/${amount}`)
+ console.log(22222222,resData.data.conversion_result)
+ return resData.data.conversion_result
 };
